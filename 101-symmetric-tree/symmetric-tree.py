@@ -5,21 +5,14 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
-        pairs = [(root.left,root.right)]
-        i = 0
+    def mirror(self,left,right):
+        if left is None  and  right is None :
+            return True
+        if left is None or right is None:
+            return False
+        return (left.val == right.val and
+            self.mirror(left.left, right.right) and
+            self.mirror(left.right, right.left))
 
-        while i < len(pairs):
-            a,b = pairs[i]
-            i += 1
-            if not a and not b:
-                continue
-            if not a or not b:
-                return False
-            if a.val != b.val:
-                return False
-            
-            pairs.append((a.left,b.right))
-            pairs.append((a.right,b.left))
-            
-        return True
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        return self.mirror(root,root)
